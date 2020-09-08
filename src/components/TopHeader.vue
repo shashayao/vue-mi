@@ -5,14 +5,13 @@
       <a class="pic-gif"></a>
       <div class="header-navs">
         <ul class="navs">
-          <li
-            v-for="(item,index) of navs"
-            :key="index"
-            class="nav-item"
-            @mouseenter="evtLiEnter(item.type)"
-            @mouseleave="evtLiLeave"
-          >
-            <a href>{{item.name}}</a>
+          <li v-for="(item,index) of navs" :key="index" class="nav-item">
+            <template v-if="item.type">
+              <a @mouseenter="evtLiEnter(item.type)" @mouseleave="evtLiLeave">{{item.name}}</a>
+            </template>
+            <template v-else>
+              <a :href="item.sourceUrl">{{item.name}}</a>
+            </template>
           </li>
         </ul>
       </div>
@@ -36,20 +35,24 @@
         </ul>
       </div>
     </div>
-    <!-- <transition name="fade"> -->
-      <div class="header-menu" v-show="headerMenuShow"  @mouseenter="evtLiEnter()"
-            @mouseleave="evtLiLeave()">
-        <ul>
-          <li v-for="(item,index) of currentNav" :key="index">
-            <a :href="item.sourcePath">
-              <img :src="item.imgUrl" />
-            </a>
-            <div class="menu-name">{{item.name}}</div>
-            <div class="menu-price">{{item.price}}</div>
-          </li>
-        </ul>
-      </div>
-    <!-- </transition> -->
+    <transition name="fademenu">
+    <div
+      class="header-menu"
+      v-show="headerMenuShow"
+      @mouseenter="evtLiEnter()"
+      @mouseleave="evtLiLeave()"
+    >
+      <ul>
+        <li v-for="(item,index) of currentNav" :key="index">
+          <a :href="item.sourcePath">
+            <img :src="item.imgUrl" />
+          </a>
+          <div class="menu-name">{{item.name}}</div>
+          <div class="menu-price">{{item.price}}</div>
+        </li>
+      </ul>
+    </div>
+    </transition>
   </div>
 </template>
 
@@ -326,6 +329,7 @@ export default {
       ],
       currentNav: this.xiaomi,
       headerMenuShow: false,
+      tTimer: "",
     };
   },
   methods: {
@@ -338,11 +342,17 @@ export default {
       this.hotItemsShow = true;
     },
     evtLiEnter(type) {
-      this.currentNav = this[type];
+      if (type) {
+        this.currentNav = this[type];
+      }
       this.headerMenuShow = true;
+      clearTimeout(this.tTimer);
     },
     evtLiLeave() {
-      this.headerMenuShow = false;
+      let self = this;
+      this.tTimer = setTimeout(function () {
+        self.headerMenuShow = false;
+      },300);
     },
   },
 };
@@ -381,6 +391,9 @@ export default {
   font-size: 16px;
   height: 88px;
   line-height: 88px;
+}
+.nav-item a{
+  cursor: pointer;
 }
 .nav-item a:hover {
   color: #ff6700;
@@ -456,6 +469,15 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+/* .fademenu-enter-active,
+.fademenu-leave-active {
+  transition: height  1s;
+}
+.fademenu-enter,
+.fademenu-leave-to {
+  height: 0;
+  opacity: 0;
+} */
 
 .search-result {
   position: absolute;
@@ -484,13 +506,13 @@ export default {
 }
 .header-menu {
   position: absolute;
-	left: 0;
-	top: 140px;
-	width: 100%;
-	height: 230px;
-	background: #fff;
-	box-shadow: 0 1px 5px #ccc;
-	z-index: 11;
+  left: 0;
+  top: 140px;
+  width: 100%;
+  height: 230px;
+  background: #fff;
+  box-shadow: 0 1px 5px #ccc;
+  z-index: 11;
 }
 .header-menu ul {
   width: 1500px;
