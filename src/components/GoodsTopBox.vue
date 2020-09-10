@@ -1,12 +1,16 @@
 <template>
   <div class="goods-box-container clearfix">
-    <div class="boxs-top">
-      <span>智能硬件</span>
-      <a href="http://www.mi.com/smart">
-        查看全部
-        <i class="sub-icon fa fa-fw fa-chevron-circle-right top-icon"></i>
-      </a>
-    </div>
+    <goods-top>
+      <template v-slot:left>
+        智能硬件
+      </template>
+      <template v-slot:right>
+        <a href="http://www.mi.com/smart" class="top-right">
+          查看全部
+          <i class="sub-icon fa fa-fw fa-chevron-circle-right top-icon"></i>
+        </a>
+      </template>
+    </goods-top>
     <div class="box-left">
       <a href="http://www.mi.com/scooter/">
         <img src="http://i3.mifile.cn/a4/124d82cc-cfce-44ab-b711-28b21be81683" alt />
@@ -14,21 +18,15 @@
     </div>
     <div class="box-right">
       <ul>
-        <li v-for="(item,index) of goods" :key="index">
-          <span class="goods-discount" :class="item.discountType">{{item.discount}}</span>
-          <a :href="item.sourceUrl">
-            <img :src="item.imgUrl" class="goods-item" />
-            <div class="goods-title">{{item.title}}</div>
-            <div class="goods-desc">{{item.desc}}</div>
-            <div class="goods-price">{{item.price}}元</div>
-          </a>
-        </li>
+        <goods-item v-for="(item,index) of goods" :key="index" :good-item="item"></goods-item>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import GoodsTop from "./common/GoodsTop";
+import GoodsItem from "./common/GoodsItem"
 export default {
   data() {
     return {
@@ -101,6 +99,10 @@ export default {
       ],
     };
   },
+  components:{
+    GoodsTop,
+    GoodsItem
+  }
 };
 </script>
 
@@ -112,21 +114,8 @@ export default {
   margin: 0 auto;
 }
 
-.boxs-top {
-  height: 58px;
-  width: 100%;
-}
-.boxs-top span {
-  font-size: 22px;
-  font-weight: 200;
-  line-height: 58px;
-  color: #333;
-  float: left;
-  height: 58px;
-}
-.boxs-top a {
+.top-right{
   display: inline-block;
-  float: right;
   color: #424242;
   height: 58px;
   line-height: 58px;
@@ -138,8 +127,9 @@ export default {
 .box-left {
   float: left;
 }
-.box-left:hover,.box-right ul li:hover{
-  transform:translateY(-1px);
+.box-left:hover,
+.box-right ul li:hover {
+  transform: translateY(-1px);
   box-shadow: 5px 5px 5px #ccc;
 }
 .box-right {
@@ -150,61 +140,5 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-}
-.box-right ul li {
-  background: #fff;
-  height: 300px;
-  width: 234px;
-  margin-left: 14px;
-  margin-bottom: 14px;
-  position: relative;
-  
-}
-.goods-item {
-  width: 160px;
-  height: 160px;
-  margin: 30px auto auto auto;
-  display: block;
-}
-.goods-title {
-  font-size: 14px;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  color: #333;
-}
-.goods-desc {
-  text-align: center;
-  font-size: 12px;
-  height: 30px;
-  line-height: 30px;
-  color: #b0b0b0;
-}
-.goods-price {
-  text-align: center;
-  font-size: 14px;
-  height: 30px;
-  line-height: 30px;
-  color: #ff6700;
-}
-.goods-discount{
-  position: absolute;
-  top: 3px;
-  left: 85px;
-  width: 64px;
-  height: 20px;
-  line-height: 20px;
-  font-size: 12px;
-  text-align: center;
-  color: #fff;
-}
-.free{
-  background: #ffac13;
-}
-.new{
-  background: #83c44e;
-}
-.discount{
-  background: #e53935;
 }
 </style>
