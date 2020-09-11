@@ -6,7 +6,7 @@
     <div class="box-bd">
       <ul class="content-list clearfix">
         <li v-for="(item,index) of contents" :key="index">
-          <goods-content-slide></goods-content-slide>
+          <goods-content-slide :content="item"></goods-content-slide>
         </li>
       </ul>
     </div>
@@ -200,5 +200,15 @@ export default {
 .goods-content {
   width: 1226px;
   margin: 0 auto;
+}
+.content-list li{
+  width: 296px;
+  display: inline-block;
+  background: #fff;
+  margin-left: 14px;
+  transition: all 0.3s;
+}
+.content-list li:first-child{
+  margin-left: 0;
 }
 </style>

@@ -124,6 +124,9 @@ export default {
   color: #b0b0b0;
   font-size: 20px;
 }
+.top-right:hover,.top-right:hover i{
+  color: #ff6700;
+}
 .box-left {
   float: left;
 }

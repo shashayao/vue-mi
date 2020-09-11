@@ -487,6 +487,8 @@ export default {
   border-right: 1px solid #ff6700;
   border-bottom: 1px solid #ff6700;
   width: 244px;
+  z-index: 2;
+  background: #fff;
 }
 .search-result li {
   height: 30px;

@@ -205,27 +205,19 @@ export default {
         },
       ],
       currPage: 0,
-      currRecommend: [],
       currM:''
     };
-  },
-  mounted() {
-    this.currRecommend = this.recommends.slice(0, 5);
   },
   methods: {
     slideNext() {
       if (this.currPage < Math.floor((this.recommends.length - 1) / 5)) {
         this.currPage++;
-        const startNunm = this.currPage * 5;
-        this.currRecommend = this.recommends.slice(startNunm, startNunm + 5);
         this.currM = this.currPage * (-1226);
       }
     },
     slidePre() {
       if (this.currPage > 0) {
         this.currPage--;
-        const startNunm = this.currPage * 5;
-        this.currRecommend = this.recommends.slice(startNunm, startNunm + 5);
         this.currM = this.currPage * (-1226);
       }
     },

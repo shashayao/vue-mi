@@ -87,12 +87,19 @@ export default {
 .product-content {
   font-size: 14px;
 }
+.product-content ul{
+  transition: all 0.3s;
+}
 .product-content ul li {
   width: 296px;
   height: 415px;
   display: inline-block;
   margin-left: 14px;
   background: #fff;
+}
+.product-content ul li:hover{
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 10px #ccc;
 }
 .product-content ul li:first-child {
   margin-left: 0;
